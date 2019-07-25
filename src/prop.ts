@@ -53,6 +53,8 @@ export interface BasePropOptions {
    * @default true (Implicitly)
    */
   _id?: boolean;
+
+  strict?: boolean;
 }
 
 export interface PropOptions extends BasePropOptions {
