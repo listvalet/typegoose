@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import { Types } from 'mongoose';
 export declare type Func = (...args: any[]) => any;
 export declare type RequiredType = boolean | [boolean, string] | string | Func | [Func, string];
 export declare type ValidatorFunction = (value: any) => boolean | Promise<boolean>;
@@ -60,4 +60,4 @@ export interface MapPropOptions extends BasePropOptions {
 }
 export declare function mapProp(options: MapPropOptions): (target: any, key: string) => void;
 export declare function arrayProp(options: ArrayPropOptions): (target: any, key: string) => void;
-export declare type Ref<T> = T | mongoose.Schema.Types.ObjectId;
+export declare type Ref<T> = T | Types.ObjectId;
