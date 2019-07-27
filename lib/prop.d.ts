@@ -17,7 +17,7 @@ export interface BasePropOptions {
     sparse?: boolean;
     expires?: string | number;
     _id?: boolean;
-    strict?: boolean;
+    schemaOptions?: mongoose.SchemaOptions;
 }
 export interface PropOptions extends BasePropOptions {
     ref?: any;

@@ -25,10 +25,6 @@
         "always"
       ]
     },
-    "linebreak-style": [
-      true,
-      "LF"
-    ],
     "max-line-length": [
       true,
       120

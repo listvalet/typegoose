@@ -54,7 +54,7 @@ export interface BasePropOptions {
    */
   _id?: boolean;
 
-  strict?: boolean;
+  schemaOptions?: mongoose.SchemaOptions;
 }
 
 export interface PropOptions extends BasePropOptions {
@@ -270,7 +270,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
     throw new InvalidPropError(Type.name, key);
   }
 
-  const { ['ref']: r, ['items']: i, ['of']: o, ...options } = rawOptions;
+  const { ['ref']: r, ['items']: i, ['of']: o, ['schemaOptions']: schemaOptions, ...options } = rawOptions;
   if (isPrimitive(Type)) {
     if (whatis === WhatIsIt.ARRAY) {
       schema[name][key] = {
@@ -337,7 +337,8 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
   const Schema = mongoose.Schema;
 
   const supressSubschemaId = rawOptions._id === false;
-  const virtualSchema = new Schema({ ...subSchema }, supressSubschemaId ? { _id: false } : {});
+  if (supressSubschemaId) { schemaOptions._id = false; }
+  const virtualSchema = new Schema({ ...subSchema }, schemaOptions);
 
   const schemaInstanceMethods = methods.instanceMethods[instance.constructor.name];
   if (schemaInstanceMethods) {
