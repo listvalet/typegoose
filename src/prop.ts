@@ -1,6 +1,6 @@
 /** @format */
 
-import { Types, Schema } from 'mongoose';
+import * as mongoose from 'mongoose';
 
 import { isNullOrUndefined } from 'util';
 import { methods, schema, virtuals } from './data';
@@ -192,14 +192,14 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
   if (typeof ref === 'string') {
     schema[name][key] = {
       ...schema[name][key],
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref,
     };
     return;
   } else if (ref) {
     schema[name][key] = {
       ...schema[name][key],
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: ref.name,
     };
     return;
@@ -209,7 +209,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
   if (itemsRef) {
     schema[name][key][0] = {
       ...schema[name][key][0],
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: itemsRef.name,
     };
     return;
@@ -219,7 +219,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
   if (refPath && typeof refPath === 'string') {
     schema[name][key] = {
       ...schema[name][key],
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       refPath,
     };
     return;
@@ -229,7 +229,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
   if (itemsRefPath && typeof itemsRefPath === 'string') {
     schema[name][key][0] = {
       ...schema[name][key][0],
-      type: Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       itemsRefPath,
     };
     return;
@@ -334,6 +334,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
     };
     return;
   }
+  const Schema = mongoose.Schema;
 
   const supressSubschemaId = rawOptions._id === false;
   const virtualSchema = new Schema({ ...subSchema }, supressSubschemaId ? { _id: false } : {});
@@ -409,4 +410,4 @@ export function arrayProp(options: ArrayPropOptions) {
 /**
  * Reference another Model
  */
-export type Ref<T> = T | Types.ObjectId;
+export type Ref<T> = T | mongoose.Schema.Types.ObjectId;
