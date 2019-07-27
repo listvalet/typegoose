@@ -270,7 +270,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
     throw new InvalidPropError(Type.name, key);
   }
 
-  const { ['ref']: r, ['items']: i, ['of']: o, ['schemaOptions']: schemaOptions, ...options } = rawOptions;
+  const { ['ref']: r, ['items']: i, ['of']: o, ['schemaOptions']: schemaOptions = {}, ...options } = rawOptions;
   if (isPrimitive(Type)) {
     if (whatis === WhatIsIt.ARRAY) {
       schema[name][key] = {
