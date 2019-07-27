@@ -310,14 +310,15 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
     return;
   }
 
+  const Schema = mongoose.Schema;
+  const supressSubschemaId = rawOptions._id === false;
+  if (supressSubschemaId) { schemaOptions._id = false; }
+
   if (whatis === WhatIsIt.ARRAY) {
     schema[name][key] = {
       ...schema[name][key][0],
       ...options,
-      type: [{
-        ...(typeof options._id !== 'undefined' ? { _id: options._id } : {}),
-        ...subSchema,
-      }],
+      type: [new Schema({ ...subSchema }, schemaOptions)],
     };
     return;
   }
@@ -334,10 +335,7 @@ function baseProp(rawOptions: any, Type: any, target: any, key: string, whatis: 
     };
     return;
   }
-  const Schema = mongoose.Schema;
 
-  const supressSubschemaId = rawOptions._id === false;
-  if (supressSubschemaId) { schemaOptions._id = false; }
   const virtualSchema = new Schema({ ...subSchema }, schemaOptions);
 
   const schemaInstanceMethods = methods.instanceMethods[instance.constructor.name];
